@@ -1,0 +1,33 @@
+//============================================================================
+// Name        : Hello.cpp
+// Author      : 
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+
+#include <iostream>
+#include <fstream>
+#include <stdio.h>
+//#include <>
+using namespace std;
+
+int main(int argc, char** argv)
+{
+	  
+    int i;
+    for (i=0; i < argc; i++)
+        printf("Argument %d is %s.\n", i, argv[i]);
+		string a=argv[0];
+		cout << a <<endl;
+//    ifstream in(a, ios::in);
+//    istreambuf_iterator<char> beg(in), end;
+//    string strdata(beg, end);
+//		cout << strdata <<endl;
+//    in.close();
+	      //cout << "!!!Hello World!!!" << endl;
+
+
+
+	  return 0;
+}
