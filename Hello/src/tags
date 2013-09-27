@@ -1,0 +1,34 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+COMMON_H_	common.h	/^#define COMMON_H_$/;"	d
+DefList	linker_pass.h	/^struct DefList $/;"	s
+DefSymbol	linker_pass.h	/^struct DefSymbol$/;"	s
+GetSingleString	linker.cpp	/^int GetSingleString(string& word, vector<string> &temp)$/;"	f
+InstrPair	linker_pass.h	/^struct InstrPair$/;"	s
+IsUsed	linker_pass.h	/^	bool IsUsed;$/;"	m	struct:UseSymbol
+LINKER_PASS_H_	linker_pass.h	/^#define LINKER_PASS_H_$/;"	d
+Module	linker_pass.h	/^struct Module$/;"	s
+ProgText	linker_pass.h	/^struct ProgText$/;"	s
+SymbolName	linker_pass.h	/^	string SymbolName;$/;"	m	struct:UseSymbol
+SymbolName	linker_pass.h	/^string SymbolName;$/;"	m	struct:DefSymbol
+SymbolOffest	linker_pass.h	/^int SymbolOffest;$/;"	m	struct:DefSymbol
+UseList	linker_pass.h	/^struct UseList$/;"	s
+UseSymbol	linker_pass.h	/^struct UseSymbol$/;"	s
+codecount	linker_pass.h	/^	int codecount;  \/\/Max 512 for machine size$/;"	m	struct:ProgText
+defcount	linker_pass.h	/^	int defcount;$/;"	m	struct:DefList
+deflist	linker_pass.h	/^	DefList deflist;$/;"	m	struct:Module
+defsymbol	linker_pass.h	/^	DefSymbol defsymbol[16];$/;"	m	struct:DefList
+instpair	linker_pass.h	/^	InstrPair instpair[512];$/;"	m	struct:ProgText
+linker_pass_one	linker_pass.cpp	/^int linker_pass_one(vector<string> temp)$/;"	f
+main	linker.cpp	/^int main(int argc, char** argv)$/;"	f
+opcode	linker_pass.h	/^	int opcode;$/;"	m	struct:InstrPair
+operand	linker_pass.h	/^	int operand;$/;"	m	struct:InstrPair
+progtext	linker_pass.h	/^	ProgText progtext;$/;"	m	struct:Module
+type	linker_pass.h	/^  string type;	$/;"	m	struct:InstrPair
+usecount	linker_pass.h	/^	int usecount;$/;"	m	struct:UseList
+uselist	linker_pass.h	/^	UseList uselist;$/;"	m	struct:Module
+usesymbol	linker_pass.h	/^	UseSymbol usesymbol[16];$/;"	m	struct:UseList
