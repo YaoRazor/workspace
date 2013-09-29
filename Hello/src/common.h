@@ -16,6 +16,16 @@
 #include <assert.h>
 #include <string>
 #include <math.h>
+#include <ctype.h>
+
+
+#define TOKEN_SIZE 1024
+
+struct Token_Info
+{
+	int line_number;
+	int line_offset;
+};
 
 using namespace std;
 

@@ -5,7 +5,9 @@
  *      Author: aaronwong
  */
 #include "linker_pass.h"
+#include "error_processing.h"
 
+extern Token_Info token_info[TOKEN_SIZE];
 #define Map_Val(a,b) ( map<string,int>::value_type( (a),(b)) )
 
 int linker_pass(vector<string> token)
@@ -29,14 +31,16 @@ int linker_pass(vector<string> token)
 	unsigned int i=0;
 	int j=0;
 	int offset=0;
+	int total_instr=0;
 	bool is_defcount=true;
-	//bool is_deflist=false;
 	bool is_usecount=false;
-	//bool is_uselist=false;
 	bool is_codecount=false;
-	//bool is_codelist=false;
 
-	cout<<"token size= "<<token.size()<<endl;
+
+  cout<<"token size= "<<token.size()<<endl;
+	cout<<"blow is pass_one"<<endl<<endl;
+	
+	/*below while loop is for pass one*/
 
 	while(i<token.size())
 	{
@@ -45,13 +49,30 @@ int linker_pass(vector<string> token)
 		{
 			module[j].offset=offset;
 			//number of defined symbol
+       
+			//check if defcount is number
+		   errorcheck_IsDigit(token[i],token_info[i].line_number,token_info[i].line_offset);
+
 			 module[j].deflist.defcount=atoi(token[i].c_str());
+      //check if there is too many symbols in definition
+      errorcheck_ToManyDef(module[j].deflist.defcount,token_info[i].line_number,token_info[i].line_offset);
+
 			 i++;
 			 assert(i<token.size());
 			 for(int k=0;k<module[j].deflist.defcount;k++)
 			 {
+				 //check if def symbol starts with alpha
+				 //cout<<token[i+k*2]<<" is for debug, and token line is"<<token_info[i+k*2].line_number<<endl;
+		     errorcheck_IsSymbol(token[i+k*2],token_info[i+k*2].line_number,token_info[i+k*2].line_offset);
+				 //check if symbol name is too long
+				 errorcheck_SymToLong(token[i+k*2],token_info[i+k*2].line_number,token_info[i+k*2].line_offset);
+
 			   module[j].deflist.defsymbol[k].symbolname=token[i+k*2];
 			   temp_symbol.symbolname=token[i+k*2];
+
+					//check if def symbol offset is number
+				 errorcheck_IsDigit(token[i+k*2+1],token_info[i+k*2+1].line_number,token_info[i+k*2+1].line_offset);
+
 			   module[j].deflist.defsymbol[k].symboloffest=atoi(token[i+k*2+1].c_str())+offset;
 			   temp_symbol.offset=atoi(token[i+k*2+1].c_str())+offset;
 				 symboltab.insert(Map_Val(temp_symbol.symbolname,temp_symbol.offset));
@@ -61,35 +82,57 @@ int linker_pass(vector<string> token)
 			 is_usecount=true;
 		}
 
-		cout<<"deflist is OK"<<endl;
+		//cout<<"deflist is OK"<<endl;
+		
 		/*get uselist*/
 		if(is_usecount==true)
 		{
+			//check if usecount is number
+			 errorcheck_IsDigit(token[i],token_info[i].line_number,token_info[i].line_offset);
 			//number of used symbol
 			 module[j].uselist.usecount=atoi(token[i].c_str());
+			// check if there is too many used symbols in uselist
+      errorcheck_ToManyUse(module[j].uselist.usecount,token_info[i].line_number,token_info[i].line_offset);
 			 i++;
 			 assert(i<token.size());
 			 for(int k=0;k<module[j].uselist.usecount;k++)
 			 {
+				 //check if use symbol starts with alpha
+		     errorcheck_IsSymbol(token[i+k],token_info[i+k].line_number,token_info[i+k].line_offset);
+				 //check if symbol name is too long
+		     errorcheck_SymToLong(token[i+k],token_info[i+k].line_number,token_info[i+k].line_offset);
+         
+				 // get usesymbol name
 			   module[j].uselist.usesymbol[k].symbolname=token[i+k];
 			 }
 			 i+=module[j].uselist.usecount;
 			 is_usecount=false;
 			 is_codecount=true;
 		}
-		cout<<"uselist is OK"<<endl;
+		//cout<<"uselist is OK"<<endl;
 
 		
 		/*get codelist*/
 		if(is_codecount==true)
 		{
+			// check if codecount is number
+			 errorcheck_IsDigit(token[i],token_info[i].line_number,token_info[i].line_offset);
 			//number of instructions
 			 module[j].codelist.codecount=atoi(token[i].c_str());
+
+			 //check if the total number of instr is above 512
+			 total_instr+=module[j].codelist.codecount;
+			 errorcheck_ToManyInstr(total_instr,token_info[i].line_number,token_info[i].line_offset);
+
+			 //get the offset of the module
 			 offset+=module[j].codelist.codecount;
 			 i++;
 			 assert(i<token.size());
 			 for(int k=0;k<module[j].codelist.codecount;k++)
 			 {
+				 //check if type is IARE
+
+			   errorcheck_IsADDR(token[i+k*2],token_info[i+k*2].line_number,token_info[i+k*2].line_offset);
 			   module[j].codelist.instpair[k].type=token[i+k*2];
 				 string opcode;
 				 string operand;
@@ -97,6 +140,8 @@ int linker_pass(vector<string> token)
 				 //module[j].codelist.instpair[k].opcode=token[i+k*2+1].substr(0,1);
 				 //module[j].codelist.instpair[k].opcode=token[i+k*2+1].substr(1);
          
+				 // check if instr is number
+				 errorcheck_IsDigit(token[i+k*2+1],token_info[i+k*2+1].line_number,token_info[i+k*2+1].line_offset);
 				 //record the size of instruction
 				 module[j].codelist.instpair[k].size=token[i+k*2+1].size();
 			   opcode=token[i+k*2+1].substr(0,1);
@@ -125,7 +170,7 @@ int linker_pass(vector<string> token)
 	
 	}
 	
-	cout<<"j="<<j<<endl;
+	//cout<<"j="<<j<<endl;
 	cout<<"module.size="<<module.size()<<endl;
 
 	/* Test information*/
@@ -159,7 +204,8 @@ int linker_pass(vector<string> token)
 	/* Test information*/
 
 
-  cout<<"module size= "<<module.size()<<endl;
+  //cout<<"module size= "<<module.size()<<endl;
+	cout<<"below is pass_two"<<endl<<endl;
 	
 	/*print Symbol Table*/
   cout<<"Symbol Table"<<endl;
@@ -183,7 +229,10 @@ int linker_pass(vector<string> token)
 					if(module[p].codelist.instpair[s].type=="I")
 					{
 						printf("%03d:",memory_count);
-						cout<<module[p].codelist.instpair[s].opcode<<module[p].codelist.instpair[s].operand<<endl;
+						int temp=module[p].codelist.instpair[s].opcode*pow(10,module[p].codelist.instpair[s].size-1);
+						temp+=module[p].codelist.instpair[s].operand;
+						cout<<temp<<endl;
+						//cout<<module[p].codelist.instpair[s].opcode<<module[p].codelist.instpair[s].operand<<endl;
 					  memory_count++;
 					}
 
