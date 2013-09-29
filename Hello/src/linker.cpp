@@ -39,7 +39,7 @@ int main(int argc, char** argv)
 
 		GetSingleString(strdata,allstring);
     
-		linker_pass_one(allstring);
+		linker_pass(allstring);
 
 		//for(int i=0;i<temp.size();i++)
 		//{

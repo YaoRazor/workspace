@@ -9,11 +9,13 @@
 #define COMMON_H_
 
 #include <iostream>
+#include <map>
 #include <fstream>
 #include <stdio.h>
 #include <vector>
 #include <assert.h>
 #include <string>
+#include <math.h>
 
 using namespace std;
 

@@ -5,29 +5,35 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
 COMMON_H_	common.h	/^#define COMMON_H_$/;"	d
+CodeList	linker_pass.h	/^struct CodeList $/;"	s
 DefList	linker_pass.h	/^struct DefList $/;"	s
 DefSymbol	linker_pass.h	/^struct DefSymbol$/;"	s
 GetSingleString	linker.cpp	/^int GetSingleString(string& word, vector<string> &temp)$/;"	f
 InstrPair	linker_pass.h	/^struct InstrPair$/;"	s
 IsUsed	linker_pass.h	/^	bool IsUsed;$/;"	m	struct:UseSymbol
 LINKER_PASS_H_	linker_pass.h	/^#define LINKER_PASS_H_$/;"	d
+Map_Val	linker_pass.cpp	/^#define Map_Val(/;"	d	file:
 Module	linker_pass.h	/^struct Module$/;"	s
-ProgText	linker_pass.h	/^struct ProgText$/;"	s
-SymbolName	linker_pass.h	/^	string SymbolName;$/;"	m	struct:UseSymbol
-SymbolName	linker_pass.h	/^string SymbolName;$/;"	m	struct:DefSymbol
-SymbolOffest	linker_pass.h	/^int SymbolOffest;$/;"	m	struct:DefSymbol
+TableSymbol	linker_pass.h	/^struct TableSymbol$/;"	s
 UseList	linker_pass.h	/^struct UseList$/;"	s
 UseSymbol	linker_pass.h	/^struct UseSymbol$/;"	s
-codecount	linker_pass.h	/^	int codecount;  \/\/Max 512 for machine size$/;"	m	struct:ProgText
+codecount	linker_pass.h	/^	int codecount;  \/\/Max 512 for machine size$/;"	m	struct:CodeList
+codelist	linker_pass.h	/^	CodeList codelist;$/;"	m	struct:Module
 defcount	linker_pass.h	/^	int defcount;$/;"	m	struct:DefList
 deflist	linker_pass.h	/^	DefList deflist;$/;"	m	struct:Module
 defsymbol	linker_pass.h	/^	DefSymbol defsymbol[16];$/;"	m	struct:DefList
-instpair	linker_pass.h	/^	InstrPair instpair[512];$/;"	m	struct:ProgText
-linker_pass_one	linker_pass.cpp	/^int linker_pass_one(vector<string> temp)$/;"	f
+instpair	linker_pass.h	/^	InstrPair instpair[512];$/;"	m	struct:CodeList
+linker_pass_one	linker_pass.cpp	/^int linker_pass_one(vector<string> token)$/;"	f
 main	linker.cpp	/^int main(int argc, char** argv)$/;"	f
+offset	linker_pass.h	/^	int offset;$/;"	m	struct:Module
+offset	linker_pass.h	/^	int offset;$/;"	m	struct:TableSymbol
 opcode	linker_pass.h	/^	int opcode;$/;"	m	struct:InstrPair
 operand	linker_pass.h	/^	int operand;$/;"	m	struct:InstrPair
-progtext	linker_pass.h	/^	ProgText progtext;$/;"	m	struct:Module
+size	linker_pass.h	/^	int size;$/;"	m	struct:InstrPair
+symbolname	linker_pass.h	/^	string symbolname;$/;"	m	struct:TableSymbol
+symbolname	linker_pass.h	/^	string symbolname;$/;"	m	struct:UseSymbol
+symbolname	linker_pass.h	/^string symbolname;$/;"	m	struct:DefSymbol
+symboloffest	linker_pass.h	/^int symboloffest;$/;"	m	struct:DefSymbol
 type	linker_pass.h	/^  string type;	$/;"	m	struct:InstrPair
 usecount	linker_pass.h	/^	int usecount;$/;"	m	struct:UseList
 uselist	linker_pass.h	/^	UseList uselist;$/;"	m	struct:Module

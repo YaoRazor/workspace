@@ -56,13 +56,19 @@ struct CodeList
 
 struct Module
 {
+	int offset;
 	DefList deflist;
 	UseList uselist;
 	CodeList codelist;
 };
 
-int linker_pass_one(vector<string> temp);
-int linker_pass_two();
+struct TableSymbol
+{
+	string symbolname;
+	int offset;
+};
+
+int linker_pass(vector<string> temp);
 int print_symbol_table();
 
 
