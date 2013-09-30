@@ -121,6 +121,8 @@ int linker_pass(vector<string> token)
          
 				 // get usesymbol name
 			   module[j].uselist.usesymbol[k].symbolname=token[i+k];
+				 //Init the information of usage
+			   module[j].uselist.usesymbol[k].IsUsed=0;
 			 }
 			 i+=module[j].uselist.usecount;
 			 is_usecount=false;
@@ -270,6 +272,16 @@ int linker_pass(vector<string> token)
 					if(module[p].codelist.instpair[s].type=="I")
 					{
 						printf("%03d: ",memory_count);
+
+						//rule 10 
+						if(module[p].codelist.instpair[s].size>4)
+						{
+							cout<<"9999 ";
+							_noparseerror(IIV);
+					    memory_count++;
+							continue;
+						}
+						
 						int temp=module[p].codelist.instpair[s].opcode*pow(10,module[p].codelist.instpair[s].size-1);
 						temp+=module[p].codelist.instpair[s].operand;
 						cout<<temp<<endl;
@@ -280,8 +292,19 @@ int linker_pass(vector<string> token)
 					if(module[p].codelist.instpair[s].type=="A")
 					{
 						printf("%03d: ",memory_count);
+
+						//rule 11 
+						if(module[p].codelist.instpair[s].size>4)
+						{
+							cout<<"9999"<<endl;
+							_noparseerror(IO);
+					    memory_count++;
+							continue;
+						}
+
 						int temp=module[p].codelist.instpair[s].opcode*pow(10,module[p].codelist.instpair[s].size-1);
 
+						//rule8
 						if(module[p].codelist.instpair[s].operand>512)
 						{
 							cout<<temp<<" ";
@@ -298,9 +321,29 @@ int linker_pass(vector<string> token)
 					if(module[p].codelist.instpair[s].type=="R")
 					{
 						printf("%03d: ",memory_count);
+
+						//rule 11 
+						if(module[p].codelist.instpair[s].size>4)
+						{
+							cout<<"9999 ";
+							_noparseerror(IO);
+					    memory_count++;
+							continue;
+						}
+
 						int temp=module[p].codelist.instpair[s].opcode*pow(10,module[p].codelist.instpair[s].size-1);
-						temp=temp+module[p].codelist.instpair[s].operand+module[p].offset;
-						cout<<temp<<endl;
+
+						if(module[p].codelist.instpair[s].operand>module[p].codelist.codecount-1)
+						{
+							temp+=module[p].offset;
+							cout<<temp<<" ";
+							_noparseerror(RAEM);
+						}
+						else
+						{
+							temp=temp+module[p].codelist.instpair[s].operand+module[p].offset;
+							cout<<temp<<endl;
+						}
 					  memory_count++;
 					}
 
@@ -308,23 +351,45 @@ int linker_pass(vector<string> token)
 					{
 						printf("%03d: ",memory_count);
 
+						//rule 11 
+						if(module[p].codelist.instpair[s].size>4)
+						{
+							cout<<"9999 ";
+							_noparseerror(IO);
+					    memory_count++;
+							continue;
+						}
 
 						int temp=module[p].codelist.instpair[s].opcode*pow(10,module[p].codelist.instpair[s].size-1);
 						int index=module[p].codelist.instpair[s].operand;
-						string a=module[p].uselist.usesymbol[index].symbolname;
-            map<string,int>::iterator it=symboltab.find(a);
-						if(it==symboltab.end())
+
+					  //rule6, check if externer address exceeds the length of the uselist
+            if(index>module[p].uselist.usecount-1) 
 						{
-							//check if used symbol has been defined
-							temp+=0;
-						  cout<<temp<<" ";
-							printf("Error: %s is not defined; zero used\n",a.c_str());
+							temp+=index;
+							cout<<temp<<" ";
+							printf("Error: External address exceeds length of uselist; treated as immediate\n");
 						}
 						else
 						{
-							temp+=it->second;
-							cout<<temp<<endl;
+							string a=module[p].uselist.usesymbol[index].symbolname;
+							module[p].uselist.usesymbol[index].IsUsed=1;
+							map<string,int>::iterator it=symboltab.find(a);
+							if(it==symboltab.end())
+							{
+								//check if used symbol has been defined
+								temp+=0;
+								cout<<temp<<" ";
+								printf("Error: %s is not defined; zero used\n",a.c_str());
+							}
+							else
+							{
+								temp+=it->second;
+								cout<<temp<<endl;
+							}
+
 						}
+
 					  memory_count++;
 					}
 
@@ -340,6 +405,7 @@ int linker_pass(vector<string> token)
 	cout<<endl;
 	for(unsigned int p=0;p<module.size();p++)
 	{
+		  //check if there is any symbol which is defined but not used
 		  for(int s=0;s<module[p].deflist.defcount;s++)
 			{
 				vector<string>::iterator iter;
@@ -347,6 +413,16 @@ int linker_pass(vector<string> token)
 				if(iter==use_tab.end())
 				{
 					printf("Warning: %s was defined in module %d but never used\n",module[p].deflist.defsymbol[s].symbolname.c_str(),p+1);
+				}
+
+			}
+
+		  //check if there is any symbol which appeared in uselist but was not actually used, rule7
+		  for(int s=0;s<module[p].uselist.usecount;s++)
+			{
+				if(module[p].uselist.usesymbol[s].IsUsed==0)
+				{
+					printf("Warning: In Module %d %s appeared in the uselist but was not actually used\n",p+1,module[p].uselist.usesymbol[s].symbolname.c_str());
 				}
 
 			}
