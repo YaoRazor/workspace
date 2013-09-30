@@ -90,6 +90,7 @@ int GetSingleString(string& word, vector<string> &temp)
 			if(word[i]=='\n')
 			{
 				numberofline++;
+				//printf("test\\n");
 				offset_within_line=0;
 			}
 			//cout<<"before j= "<<j<<endl;
@@ -112,15 +113,34 @@ int GetSingleString(string& word, vector<string> &temp)
 	}
   temp.pop_back();
 
+	if((numberofline==token_info[j-1].line_number) ||(numberofline-1)==token_info[j-1].line_number)
+  {
+		//printf("enter\n");
+	  token_info[j].line_offset=token_info[j-1].line_offset+temp[j-1].size();
+	  token_info[j].line_number=token_info[j-1].line_number;
+	}
+  else
+  {
+		//printf("enter\n");
+	  token_info[j].line_offset=1;
+	  token_info[j].line_number=numberofline-1;
+	}
 
-	for(int i=0;i<temp.size();i++)
-	{
+
+  //printf("j=%d\n",j);
+	//cout<<"numberofline="<<numberofline<<endl;
+  //cout<<token_info[j].line_number<<endl;
+  //cout<<"previous line number is "<<token_info[j-1].line_number<<endl;
+	//cout<<temp[j-1]<<endl;
+  //cout<<token_info[j].line_offset<<endl;
+
+	//for(int i=0;i<temp.size();i++)
+	//{
 		//cout<<"token["<<i<<"]="<<temp[i]<<endl;
 		//cout<<"linenumber is "<<token_info[i].line_number<<endl;
 		//cout<<"offet within the line is "<<token_info[i].line_offset<<endl;
-	}
+	//}
   //cout<<"temp.size="<<temp.size()<<endl;
-	//cout<<"numberofline="<<numberofline<<endl;
 
 	return 0;
 }

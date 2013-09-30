@@ -15,7 +15,7 @@ extern Token_Info token_info[TOKEN_SIZE]; //record the line and offset informati
 
 int linker_pass(vector<string> token)
 {
-	vector<string>::iterator endtest;
+	vector<string>::iterator endtest=token.begin();
 	Module temp;
   vector<Module> module(1);
 
@@ -47,7 +47,7 @@ int linker_pass(vector<string> token)
 	//cout<<"blow is pass_one"<<endl<<endl;
 	
 	/*below while loop is for pass one*/
-	if(token.size()==0)
+	if(endtest==token.end())
 	{
     cout<<"Symbol Table"<<endl<<endl;
     cout<<"Memory Map"<<endl<<endl;
@@ -58,23 +58,42 @@ int linker_pass(vector<string> token)
 
 	while(i<token.size())
 	{
+		/*check EOF*/
+		if(endtest==token.end())
+		{
+			_parseerror(token_info[i].line_number,token_info[i].line_offset,NUM_EXPECTED);
+			exit(0);
+		}
+		/*check EOF*/
+
 		/*get deflist*/
 		if(is_defcount==true)
 		{
+			
 			module[j].offset=offset;
-			//number of defined symbol
+      
        
 			//check if defcount is number
 		   errorcheck_IsDigit(token[i],token_info[i].line_number,token_info[i].line_offset);
 
+			//number of defined symbol
 			 module[j].deflist.defcount=atoi(token[i].c_str());
       //check if there is too many symbols in definition
       errorcheck_ToManyDef(module[j].deflist.defcount,token_info[i].line_number,token_info[i].line_offset);
 
 			 i++;
-			 assert(i<token.size());
+			 //assert(i<token.size());
 			 for(int k=0;k<module[j].deflist.defcount;k++)
 			 {
+         /*EOF TEST*/
+				  endtest++;
+					if(endtest==token.end())
+					{
+						_parseerror(token_info[i+k*2].line_number,token_info[i+k*2].line_offset,SYM_EXPECTED);
+			      exit(0);
+					}
+         /*EOF TEST*/
+
 				 //check if def symbol starts with alpha
 				 //cout<<token[i+k*2]<<" is for debug, and token line is"<<token_info[i+k*2].line_number<<endl;
 		     errorcheck_IsSymbol(token[i+k*2],token_info[i+k*2].line_number,token_info[i+k*2].line_offset);
@@ -83,6 +102,16 @@ int linker_pass(vector<string> token)
 
 			   module[j].deflist.defsymbol[k].symbolname=token[i+k*2];
 			   temp_symbol.symbolname=token[i+k*2];
+
+
+         /*EOF TEST*/
+				  endtest++;
+					if(endtest==token.end())
+					{
+						_parseerror(token_info[i+k*2+1].line_number,token_info[i+k*2+1].line_offset,NUM_EXPECTED);
+			      exit(0);
+					}
+         /*EOF TEST*/
 
 					//check if def symbol offset is number
 				 errorcheck_IsDigit(token[i+k*2+1],token_info[i+k*2+1].line_number,token_info[i+k*2+1].line_offset);
@@ -111,9 +140,19 @@ int linker_pass(vector<string> token)
 
 		//cout<<"deflist is OK"<<endl;
 		
+		/*check EOF*/
+		endtest++;
+		if(endtest==token.end())
+		{
+			_parseerror(token_info[i].line_number,token_info[i].line_offset,NUM_EXPECTED);
+			exit(0);
+		}
+		/*check EOF*/
+
 		/*get uselist*/
 		if(is_usecount==true)
 		{
+       
 			//check if usecount is number
 			 errorcheck_IsDigit(token[i],token_info[i].line_number,token_info[i].line_offset);
 			//number of used symbol
@@ -121,9 +160,19 @@ int linker_pass(vector<string> token)
 			// check if there is too many used symbols in uselist
       errorcheck_ToManyUse(module[j].uselist.usecount,token_info[i].line_number,token_info[i].line_offset);
 			 i++;
-			 assert(i<token.size());
+			 //assert(i<token.size());
 			 for(int k=0;k<module[j].uselist.usecount;k++)
 			 {
+
+         /*EOF TEST*/
+				  endtest++;
+					if(endtest==token.end())
+					{
+						_parseerror(token_info[i+k].line_number,token_info[i+k].line_offset,SYM_EXPECTED);
+			      exit(0);
+					}
+         /*EOF TEST*/
+
 				 //check if use symbol starts with alpha
 		     errorcheck_IsSymbol(token[i+k],token_info[i+k].line_number,token_info[i+k].line_offset);
 				 //check if symbol name is too long
@@ -141,6 +190,15 @@ int linker_pass(vector<string> token)
 		//cout<<"uselist is OK"<<endl;
 
 		
+		/*check EOF*/
+		endtest++;
+		if(endtest==token.end())
+		{
+			_parseerror(token_info[i].line_number,token_info[i].line_offset,NUM_EXPECTED);
+			exit(0);
+		}
+		/*check EOF*/
+		
 		/*get codelist*/
 		if(is_codecount==true)
 		{
@@ -156,11 +214,19 @@ int linker_pass(vector<string> token)
 			 //get the offset of the module
 			 offset+=module[j].codelist.codecount;
 			 i++;
-			 assert(i<token.size());
+			 //assert(i<token.size());
 			 for(int k=0;k<module[j].codelist.codecount;k++)
 			 {
-				 //check if type is IARE
+         /*EOF TEST*/
+				  endtest++;
+					if(endtest==token.end())
+					{
+						_parseerror(token_info[i+k*2].line_number,token_info[i+k*2].line_offset,ADDR_EXPECTED);
+			      exit(0);
+					}
+         /*EOF TEST*/
 
+				 //check if type is IARE
 			   errorcheck_IsADDR(token[i+k*2],token_info[i+k*2].line_number,token_info[i+k*2].line_offset);
 			   module[j].codelist.instpair[k].type=token[i+k*2];
 				 string opcode;
@@ -169,6 +235,15 @@ int linker_pass(vector<string> token)
 				 //module[j].codelist.instpair[k].opcode=token[i+k*2+1].substr(0,1);
 				 //module[j].codelist.instpair[k].opcode=token[i+k*2+1].substr(1);
          
+         /*EOF TEST*/
+				  endtest++;
+					if(endtest==token.end())
+					{
+						_parseerror(token_info[i+k*2+1].line_number,token_info[i+k*2+1].line_offset,NUM_EXPECTED);
+			      exit(0);
+					}
+         /*EOF TEST*/
+
 				 // check if instr is number
 				 errorcheck_IsDigit(token[i+k*2+1],token_info[i+k*2+1].line_number,token_info[i+k*2+1].line_offset);
 				 //record the size of instruction
@@ -194,6 +269,7 @@ int linker_pass(vector<string> token)
       //add a new module
 			module.push_back(temp);
 		}
+		endtest++;
 		j++;
 		//cout<<"loop is OK"<<endl;
 	
