@@ -9,11 +9,13 @@
 #include "warning_and_error.h"
 
 extern Token_Info token_info[TOKEN_SIZE]; //record the line and offset information of each token
+#define INSTR_SIZE 4
 
 #define Map_Val(a,b) ( map<string,int>::value_type( (a),(b)) )
 
 int linker_pass(vector<string> token)
 {
+	vector<string>::iterator endtest;
 	Module temp;
   vector<Module> module(1);
 
@@ -45,6 +47,14 @@ int linker_pass(vector<string> token)
 	//cout<<"blow is pass_one"<<endl<<endl;
 	
 	/*below while loop is for pass one*/
+	if(token.size()==0)
+	{
+    cout<<"Symbol Table"<<endl<<endl;
+    cout<<"Memory Map"<<endl<<endl;
+		//printf("enter case");
+		exit(0);
+	}
+
 
 	while(i<token.size())
 	{
