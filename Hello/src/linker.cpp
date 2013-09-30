@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 //[>test input<]	 
 
 		string a=argv[1];
-		cout << a <<endl;
+	//	cout << a <<endl;
 
 //		[>read all text of one file to string<]
 
@@ -32,7 +32,9 @@ int main(int argc, char** argv)
 		ifstream in(a.c_str());
 		istreambuf_iterator<char> beg(in), end;
 		string strdata(beg, end);
-		cout << strdata <<endl;
+
+		//Debug information
+		//cout << strdata <<endl;
 
 	  vector<string> allstring(1);  //construct one empty element
 
@@ -40,6 +42,7 @@ int main(int argc, char** argv)
     
 		linker_pass(allstring);
 
+		//Debug informaiton
 		//for(int i=0;i<temp.size();i++)
 		//{
 			//cout<<"temp["<<i<<"]="<<temp[i]<<endl;
@@ -112,9 +115,9 @@ int GetSingleString(string& word, vector<string> &temp)
 
 	for(int i=0;i<temp.size();i++)
 	{
-		cout<<"token["<<i<<"]="<<temp[i]<<endl;
-		cout<<"linenumber is "<<token_info[i].line_number<<endl;
-		cout<<"offet within the line is "<<token_info[i].line_offset<<endl;
+		//cout<<"token["<<i<<"]="<<temp[i]<<endl;
+		//cout<<"linenumber is "<<token_info[i].line_number<<endl;
+		//cout<<"offet within the line is "<<token_info[i].line_offset<<endl;
 	}
   //cout<<"temp.size="<<temp.size()<<endl;
 	//cout<<"numberofline="<<numberofline<<endl;

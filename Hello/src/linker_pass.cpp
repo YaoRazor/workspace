@@ -6,14 +6,18 @@
  */
 #include "linker_pass.h"
 #include "error_processing.h"
+#include "warning_and_error.h"
 
-extern Token_Info token_info[TOKEN_SIZE];
+extern Token_Info token_info[TOKEN_SIZE]; //record the line and offset information of each token
+
 #define Map_Val(a,b) ( map<string,int>::value_type( (a),(b)) )
 
 int linker_pass(vector<string> token)
 {
 	Module temp;
   vector<Module> module(1);
+
+	vector<string> repetion_symbol;
   
   map<string,int> symboltab;	
   TableSymbol temp_symbol;
@@ -37,8 +41,8 @@ int linker_pass(vector<string> token)
 	bool is_codecount=false;
 
 
-  cout<<"token size= "<<token.size()<<endl;
-	cout<<"blow is pass_one"<<endl<<endl;
+  //cout<<"token size= "<<token.size()<<endl;
+	//cout<<"blow is pass_one"<<endl<<endl;
 	
 	/*below while loop is for pass one*/
 
@@ -75,7 +79,20 @@ int linker_pass(vector<string> token)
 
 			   module[j].deflist.defsymbol[k].symboloffest=atoi(token[i+k*2+1].c_str())+offset;
 			   temp_symbol.offset=atoi(token[i+k*2+1].c_str())+offset;
-				 symboltab.insert(Map_Val(temp_symbol.symbolname,temp_symbol.offset));
+
+				 //
+				 pair<map< string,int >::iterator,bool > ret;
+
+				 ret=symboltab.insert(Map_Val(temp_symbol.symbolname,temp_symbol.offset));
+
+				 //test if symbol is mutidefined
+					if( !ret.second )
+					{
+						  repetion_symbol.push_back(temp_symbol.symbolname);
+							//cout<<"reption symbol name is "<<temp_symbol.symbolname<<endl;
+					}
+				 //test if symbol is mutidefined
+
 			 }
 			 i+=module[j].deflist.defcount*2;
 			 is_defcount=false;
@@ -171,48 +188,66 @@ int linker_pass(vector<string> token)
 	}
 	
 	//cout<<"j="<<j<<endl;
-	cout<<"module.size="<<module.size()<<endl;
+  //cout<<"module.size="<<module.size()<<endl;
 
-	/* Test information*/
-	//for(unsigned int p=0;p<module.size();p++)
-	//{
+	/* check the validity of the def symbols*/
+	for(unsigned int p=0;p<module.size();p++)
+	{
 			//cout<<"module ["<<p<<"] defcount="<<module[p].deflist.defcount<<endl;
-      //for(int s=0;s<module[p].deflist.defcount;s++)
-      //{
-           //cout<<"defsymbol["<<s<<"] is "<<module[p].deflist.defsymbol[s].symbolname<<endl;
-           //cout<<"defsymbol["<<s<<"] offset is "<<module[p].deflist.defsymbol[s].symboloffest<<endl;
-      //}
+			for(int s=0;s<module[p].deflist.defcount;s++)
+			{
+				if((module[p].deflist.defsymbol[s].symboloffest-module[p].offset)>module[p].codelist.codecount-1)
+				{
+					printf("Warning: Module %d: %s to big %d (max=%d) assume zero relative\n",p+1,module[p].deflist.defsymbol[s].symbolname.c_str(),module[p].deflist.defsymbol[s].symboloffest,module[p].codelist.codecount-1); //rule5
+          map<string,int>::iterator iter;	
+          iter=symboltab.find(module[p].deflist.defsymbol[s].symbolname);
+					iter->second=0;
+          //module[p].deflist.defsymbol[s].symboloffest-1;
+				}
+					 //cout<<"defsymbol["<<s<<"] is "<<module[p].deflist.defsymbol[s].symbolname<<endl;
+					 //cout<<"defsymbol["<<s<<"] offset is "<<module[p].deflist.defsymbol[s].symboloffest<<endl;
+			}
 
 			//cout<<"module ["<<p<<"] usecount="<<module[p].uselist.usecount<<endl;
-      //for(int s=0;s<module[p].uselist.usecount;s++)
-      //{
-          //cout<<"usesymbol["<<s<<"] is "<<module[p].uselist.usesymbol[s].symbolname<<endl;
-          ////cout<<"usesymbol["<<s<<"]"<<module[p].deflist.defsymbol[s].symboloffest<<endl;
-
-      //}
+			//for(int s=0;s<module[p].uselist.usecount;s++)
+			//{
+					//cout<<"usesymbol["<<s<<"] is "<<module[p].uselist.usesymbol[s].symbolname<<endl;
+			//}
 	
 			//cout<<"module ["<<p<<"] codecount="<<module[p].codelist.codecount<<endl;
-      //for(int s=0;s<module[p].codelist.codecount;s++)
-      //{
-          //cout<<"instrpair["<<s<<"] type is "<<module[p].codelist.instpair[s].type<<endl;
-          //cout<<"instrpair["<<s<<"] size is "<<module[p].codelist.instpair[s].size<<endl;
-          //cout<<"instrpair["<<s<<"] opcode is "<<module[p].codelist.instpair[s].opcode<<endl;
-          //cout<<"instrpair["<<s<<"] operand is "<<module[p].codelist.instpair[s].operand<<endl;
+			//for(int s=0;s<module[p].codelist.codecount;s++)
+			//{
+					//cout<<"instrpair["<<s<<"] type is "<<module[p].codelist.instpair[s].type<<endl;
+					//cout<<"instrpair["<<s<<"] size is "<<module[p].codelist.instpair[s].size<<endl;
+					//cout<<"instrpair["<<s<<"] opcode is "<<module[p].codelist.instpair[s].opcode<<endl;
+					//cout<<"instrpair["<<s<<"] operand is "<<module[p].codelist.instpair[s].operand<<endl;
 
-      //}
-	//}
-	/* Test information*/
+			//}
+	}
+	/* check the validity of the def symbols*/
 
 
   //cout<<"module size= "<<module.size()<<endl;
-	cout<<"below is pass_two"<<endl<<endl;
+	//cout<<"below is pass_two"<<endl<<endl;
 	
 	/*print Symbol Table*/
   cout<<"Symbol Table"<<endl;
   map<string,int>::iterator iter;	
+	vector<string>::iterator find_symbol;
 	for(iter=symboltab.begin();iter!=symboltab.end();iter++)
 	{
-		printf("%s=%d\n",(iter->first).c_str(),iter->second);
+		printf("%s=%d",(iter->first).c_str(),iter->second);
+    
+		//check if it is redefined
+		find_symbol=find(repetion_symbol.begin(),repetion_symbol.end(),iter->first);
+		if(find_symbol!=repetion_symbol.end())   //redefined
+		{
+       printf(" Error: This variable is multiple times defined; first value used\n" );
+		}
+		else
+		{
+       printf("\n");
+		}
 		//cout<<iter->first<<"="<<iter->second<<endl;
 	
 	}
@@ -220,15 +255,21 @@ int linker_pass(vector<string> token)
 	cout<<endl;
 
 	/*print memory tab*/
-  cout<<"Memory Table"<<endl;
+  cout<<"Memory Map"<<endl;
+  vector<string> use_tab;
 	int memory_count=0;
 	for(unsigned int p=0;p<module.size();p++)
 	{
+		  for(int s=0;s<module[p].uselist.usecount;s++)
+			{
+				use_tab.push_back(module[p].uselist.usesymbol[s].symbolname);
+			}
+
       for(int s=0;s<module[p].codelist.codecount;s++)
       {
 					if(module[p].codelist.instpair[s].type=="I")
 					{
-						printf("%03d:",memory_count);
+						printf("%03d: ",memory_count);
 						int temp=module[p].codelist.instpair[s].opcode*pow(10,module[p].codelist.instpair[s].size-1);
 						temp+=module[p].codelist.instpair[s].operand;
 						cout<<temp<<endl;
@@ -238,16 +279,25 @@ int linker_pass(vector<string> token)
 
 					if(module[p].codelist.instpair[s].type=="A")
 					{
-						printf("%03d:",memory_count);
+						printf("%03d: ",memory_count);
 						int temp=module[p].codelist.instpair[s].opcode*pow(10,module[p].codelist.instpair[s].size-1);
-						temp+=module[p].codelist.instpair[s].operand;
-						cout<<temp<<endl;
+
+						if(module[p].codelist.instpair[s].operand>512)
+						{
+							cout<<temp<<" ";
+							_noparseerror(AAEM);
+						}
+						else
+						{
+							temp+=module[p].codelist.instpair[s].operand;
+							cout<<temp<<endl;
+						}
 					  memory_count++;
 					}
 
 					if(module[p].codelist.instpair[s].type=="R")
 					{
-						printf("%03d:",memory_count);
+						printf("%03d: ",memory_count);
 						int temp=module[p].codelist.instpair[s].opcode*pow(10,module[p].codelist.instpair[s].size-1);
 						temp=temp+module[p].codelist.instpair[s].operand+module[p].offset;
 						cout<<temp<<endl;
@@ -256,15 +306,25 @@ int linker_pass(vector<string> token)
 
 					if(module[p].codelist.instpair[s].type=="E")
 					{
-						printf("%03d:",memory_count);
+						printf("%03d: ",memory_count);
 
 
 						int temp=module[p].codelist.instpair[s].opcode*pow(10,module[p].codelist.instpair[s].size-1);
 						int index=module[p].codelist.instpair[s].operand;
 						string a=module[p].uselist.usesymbol[index].symbolname;
             map<string,int>::iterator it=symboltab.find(a);
-            temp+=it->second;
-						cout<<temp<<endl;
+						if(it==symboltab.end())
+						{
+							//check if used symbol has been defined
+							temp+=0;
+						  cout<<temp<<" ";
+							printf("Error: %s is not defined; zero used\n",a.c_str());
+						}
+						else
+						{
+							temp+=it->second;
+							cout<<temp<<endl;
+						}
 					  memory_count++;
 					}
 
@@ -273,6 +333,29 @@ int linker_pass(vector<string> token)
       }
 	}
 	/*print memory tab*/
+
+
+	/*check the relation between defintion(deflist,uselist) and actual usage*/
+	//cout<<use_tab.size()<<endl;
+	cout<<endl;
+	for(unsigned int p=0;p<module.size();p++)
+	{
+		  for(int s=0;s<module[p].deflist.defcount;s++)
+			{
+				vector<string>::iterator iter;
+				iter=find(use_tab.begin(),use_tab.end(),module[p].deflist.defsymbol[s].symbolname);
+				if(iter==use_tab.end())
+				{
+					printf("Warning: %s was defined in module %d but never used\n",module[p].deflist.defsymbol[s].symbolname.c_str(),p+1);
+				}
+
+			}
+
+	
+	}
+	cout<<endl;
+
+	/*check the relation between defintion(deflist,uselist) and actual usage*/
  
   return 0;
 
