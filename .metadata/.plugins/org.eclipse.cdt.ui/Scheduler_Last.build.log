@@ -1,0 +1,20 @@
+23:22:47 **** Build of configuration Debug for project Scheduler_Last ****
+make all 
+Building file: ../src/Aaron_Scheduler.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Aaron_Scheduler.d" -MT"src/Aaron_Scheduler.d" -o "src/Aaron_Scheduler.o" "../src/Aaron_Scheduler.cpp"
+Finished building: ../src/Aaron_Scheduler.cpp
+ 
+Building file: ../src/Schedule_FCFS.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Schedule_FCFS.d" -MT"src/Schedule_FCFS.d" -o "src/Schedule_FCFS.o" "../src/Schedule_FCFS.cpp"
+Finished building: ../src/Schedule_FCFS.cpp
+ 
+Building target: Scheduler_Last
+Invoking: MacOS X C++ Linker
+g++  -o "Scheduler_Last"  ./src/Aaron_Scheduler.o ./src/Schedule_FCFS.o   
+Finished building target: Scheduler_Last
+ 
+
+23:22:49 Build Finished (took 2s.230ms)
+

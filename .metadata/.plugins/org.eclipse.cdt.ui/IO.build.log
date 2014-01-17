@@ -1,0 +1,25 @@
+20:36:44 **** Incremental Build of configuration Debug for project IO ****
+make all 
+Building file: ../src/aaron_io.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/aaron_io.d" -MT"src/aaron_io.d" -o "src/aaron_io.o" "../src/aaron_io.cpp"
+Finished building: ../src/aaron_io.cpp
+ 
+Building file: ../src/mmu.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/mmu.d" -MT"src/mmu.d" -o "src/mmu.o" "../src/mmu.cpp"
+Finished building: ../src/mmu.cpp
+ 
+Building file: ../src/nru.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/nru.d" -MT"src/nru.d" -o "src/nru.o" "../src/nru.cpp"
+Finished building: ../src/nru.cpp
+ 
+Building target: IO
+Invoking: MacOS X C++ Linker
+g++  -o "IO"  ./src/aaron_io.o ./src/mmu.o ./src/nru.o   
+Finished building target: IO
+ 
+
+20:36:47 Build Finished (took 2s.548ms)
+

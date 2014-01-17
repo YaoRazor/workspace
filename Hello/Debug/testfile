@@ -1,0 +1,119 @@
+../input-1
+1 xy 2
+2 z xy
+5 R 1004  I 5678  E 2000  R 8002  E 7001
+0
+1 z
+6 R 8001  E 1000  E 1000  E 3000  R 1002  A 1010
+0
+1 z
+2 R 5001  E 4000
+1 z 2
+2 xy z
+3 A 8000  E 1001  E 2000
+
+word number is 171
+temp.size=54
+numberofline=12
+the size of module is 1
+token size= 54
+deflist is OK
+uselist is OK
+i= 17
+deflist is OK
+uselist is OK
+i= 33
+deflist is OK
+uselist is OK
+i= 41
+deflist is OK
+uselist is OK
+j=4
+module.size=4
+module [0] defcount=1
+defsymbol[0] is xy
+defsymbol[0] offset is 2
+module [0] usecount=2
+usesymbol[0] is z
+usesymbol[1] is xy
+module [0] codecount=5
+instrpair[0] type is R
+instrpair[0] size is 4
+instrpair[0] opcode is 1
+instrpair[0] operand is 4
+instrpair[1] type is I
+instrpair[1] size is 4
+instrpair[1] opcode is 5
+instrpair[1] operand is 678
+instrpair[2] type is E
+instrpair[2] size is 4
+instrpair[2] opcode is 2
+instrpair[2] operand is 0
+instrpair[3] type is R
+instrpair[3] size is 4
+instrpair[3] opcode is 8
+instrpair[3] operand is 2
+instrpair[4] type is E
+instrpair[4] size is 4
+instrpair[4] opcode is 7
+instrpair[4] operand is 1
+module [1] defcount=0
+module [1] usecount=1
+usesymbol[0] is z
+module [1] codecount=6
+instrpair[0] type is R
+instrpair[0] size is 4
+instrpair[0] opcode is 8
+instrpair[0] operand is 1
+instrpair[1] type is E
+instrpair[1] size is 4
+instrpair[1] opcode is 1
+instrpair[1] operand is 0
+instrpair[2] type is E
+instrpair[2] size is 4
+instrpair[2] opcode is 1
+instrpair[2] operand is 0
+instrpair[3] type is E
+instrpair[3] size is 4
+instrpair[3] opcode is 3
+instrpair[3] operand is 0
+instrpair[4] type is R
+instrpair[4] size is 4
+instrpair[4] opcode is 1
+instrpair[4] operand is 2
+instrpair[5] type is A
+instrpair[5] size is 4
+instrpair[5] opcode is 1
+instrpair[5] operand is 10
+module [2] defcount=0
+module [2] usecount=1
+usesymbol[0] is z
+module [2] codecount=2
+instrpair[0] type is R
+instrpair[0] size is 4
+instrpair[0] opcode is 5
+instrpair[0] operand is 1
+instrpair[1] type is E
+instrpair[1] size is 4
+instrpair[1] opcode is 4
+instrpair[1] operand is 0
+module [3] defcount=1
+defsymbol[0] is z
+defsymbol[0] offset is 2
+module [3] usecount=2
+usesymbol[0] is xy
+usesymbol[1] is z
+module [3] codecount=3
+instrpair[0] type is A
+instrpair[0] size is 4
+instrpair[0] opcode is 8
+instrpair[0] operand is 0
+instrpair[1] type is E
+instrpair[1] size is 4
+instrpair[1] opcode is 1
+instrpair[1] operand is 1
+instrpair[2] type is E
+instrpair[2] size is 4
+instrpair[2] opcode is 2
+instrpair[2] operand is 0
+module size= 4

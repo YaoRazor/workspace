@@ -1,0 +1,19 @@
+//============================================================================
+// Name        : test_vector.cpp
+// Author      : Yao Wang
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+
+	vector<int> a;
+
+	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+	return 0;
+}

@@ -17,6 +17,8 @@
 #include <string>
 #include <math.h>
 #include <ctype.h>
+#include <cstdlib>
+#include <algorithm>
 
 
 #define TOKEN_SIZE 1024

@@ -1,0 +1,32 @@
+//============================================================================
+// Name        : test.cpp
+// Author      : Yao Wang
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+#include <unistd.h>
+#include <stdio.h>
+#include <string>
+#include <iostream>
+#include <stdlib.h>
+#include <vector>
+#include <bitset>
+using namespace std;
+
+int main(int argc, char * argv[])
+{
+	unsigned int a | = (1<<31);
+	cout<<bitset<32>(a)<<endl;
+
+
+	//vector<int> *a;
+	//a=new vector<int>;
+	//printf("a.size=%d",a->size());
+//   int a=7;
+//   int b=4;
+//   int c=a%b;
+//   printf("c=%d\n",c);
+   return 0;
+
+}

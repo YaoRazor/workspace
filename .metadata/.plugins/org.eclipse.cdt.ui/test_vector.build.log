@@ -1,0 +1,6 @@
+22:05:47 **** Incremental Build of configuration Debug for project test_vector ****
+make all 
+make: Nothing to be done for `all'.
+
+22:05:47 Build Finished (took 115ms)
+

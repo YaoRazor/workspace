@@ -1,0 +1,120 @@
+13:28:10 **** Incremental Build of configuration Debug for project IO_Scheduler ****
+make all 
+Building file: ../src/nru.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/nru.d" -MT"src/nru.d" -o "src/nru.o" "../src/nru.cpp"
+Finished building: ../src/nru.cpp
+ 
+Building target: IO_Scheduler
+Invoking: MacOS X C++ Linker
+g++  -o "IO_Scheduler"  ./src/IO_Scheduler.o ./src/mmu.o ./src/nru.o   
+Finished building target: IO_Scheduler
+ 
+13:29:50 **** Incremental Build of configuration Debug for project IO_Scheduler ****
+make all 
+Building file: ../src/nru.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/nru.d" -MT"src/nru.d" -o "src/nru.o" "../src/nru.cpp"
+Finished building: ../src/nru.cpp
+ 
+Building target: IO_Scheduler
+Invoking: MacOS X C++ Linker
+g++  -o "IO_Scheduler"  ./src/IO_Scheduler.o ./src/mmu.o ./src/nru.o   
+Finished building target: IO_Scheduler
+ 
+13:39:46 **** Incremental Build of configuration Debug for project IO_Scheduler ****
+make all 
+Building file: ../src/nru.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/nru.d" -MT"src/nru.d" -o "src/nru.o" "../src/nru.cpp"
+Finished building: ../src/nru.cpp
+ 
+Building target: IO_Scheduler
+Invoking: MacOS X C++ Linker
+g++  -o "IO_Scheduler"  ./src/IO_Scheduler.o ./src/mmu.o ./src/nru.o   
+Finished building target: IO_Scheduler
+ 
+13:43:20 **** Incremental Build of configuration Debug for project IO_Scheduler ****
+make all 
+Building file: ../src/nru.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/nru.d" -MT"src/nru.d" -o "src/nru.o" "../src/nru.cpp"
+Finished building: ../src/nru.cpp
+ 
+Building target: IO_Scheduler
+Invoking: MacOS X C++ Linker
+g++  -o "IO_Scheduler"  ./src/IO_Scheduler.o ./src/mmu.o ./src/nru.o   
+Finished building target: IO_Scheduler
+ 
+13:46:04 **** Incremental Build of configuration Debug for project IO_Scheduler ****
+make all 
+Building file: ../src/nru.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/nru.d" -MT"src/nru.d" -o "src/nru.o" "../src/nru.cpp"
+Finished building: ../src/nru.cpp
+ 
+Building target: IO_Scheduler
+Invoking: MacOS X C++ Linker
+g++  -o "IO_Scheduler"  ./src/IO_Scheduler.o ./src/mmu.o ./src/nru.o   
+Finished building target: IO_Scheduler
+ 
+22:05:39 **** Incremental Build of configuration Debug for project IO_Scheduler ****
+make all 
+make: Nothing to be done for `all'.
+22:05:42 **** Incremental Build of configuration Debug for project test ****
+make all 
+Building file: ../src/test.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/test.d" -MT"src/test.d" -o "src/test.o" "../src/test.cpp"
+Finished building: ../src/test.cpp
+ 
+Building target: test
+Invoking: MacOS X C++ Linker
+g++  -o "test"  ./src/test.o   
+Finished building target: test
+ 
+22:05:47 **** Incremental Build of configuration Debug for project test_vector ****
+make all 
+make: Nothing to be done for `all'.
+22:05:51 **** Incremental Build of configuration Debug for project test ****
+make all 
+make: Nothing to be done for `all'.
+22:56:09 **** Build of configuration Debug for project test ****
+make all 
+Building file: ../src/test.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/test.d" -MT"src/test.d" -o "src/test.o" "../src/test.cpp"
+Finished building: ../src/test.cpp
+ 
+Building target: test
+Invoking: MacOS X C++ Linker
+g++  -o "test"  ./src/test.o   
+Finished building target: test
+ 
+22:56:17 **** Incremental Build of configuration Debug for project test ****
+make all 
+make: Nothing to be done for `all'.
+22:56:59 **** Incremental Build of configuration Debug for project test ****
+make all 
+Building file: ../src/test.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/test.d" -MT"src/test.d" -o "src/test.o" "../src/test.cpp"
+Finished building: ../src/test.cpp
+ 
+Building target: test
+Invoking: MacOS X C++ Linker
+g++  -o "test"  ./src/test.o   
+Finished building target: test
+ 
+22:58:55 **** Incremental Build of configuration Debug for project test ****
+make all 
+Building file: ../src/test.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/test.d" -MT"src/test.d" -o "src/test.o" "../src/test.cpp"
+Finished building: ../src/test.cpp
+ 
+Building target: test
+Invoking: MacOS X C++ Linker
+g++  -o "test"  ./src/test.o   
+Finished building target: test
+ 

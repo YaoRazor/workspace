@@ -1,0 +1,12 @@
+Warning: Module 3: X21 to big 5 (max=0) assume zero relative
+Symbol Table
+X21=0 Error: This variable is multiple times defined; first value used
+
+Memory Map
+000: 1000
+001: 1000
+002: 1000
+003: 2000 Error: Absolute address exceeds machine size; zero used
+004: 3456
+
+

@@ -1,0 +1,6 @@
+tar -jxvf YaoWang_lab3.tar.bz2
+cd Debug/
+make clean
+make all
+
+
